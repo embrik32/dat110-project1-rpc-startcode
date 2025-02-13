@@ -18,13 +18,10 @@ public class RPCClient {
 	
 	public void connect() {
 		
-		// TODO - START
-		// connect using the RPC client
 		
-		if (true)
-			throw new UnsupportedOperationException(TODO.method());
+				connection = msgclient.connect();
+			
 		
-		// TODO - END
 	}
 	
 	public void disconnect() {
@@ -32,10 +29,12 @@ public class RPCClient {
 		// TODO - START
 		// disconnect by closing the underlying messaging connection
 		
-		if (true)
-			throw new UnsupportedOperationException(TODO.method());
 		
-		// TODO - END
+			if (connection != null) {
+				connection.close();
+				connection = null;
+			}
+	
 	}
 
 	/*
@@ -48,21 +47,12 @@ public class RPCClient {
 	public byte[] call(byte rpcid, byte[] param) {
 		
 		byte[] returnval = null;
-		
-		// TODO - START
-
-		/*
-
-		The rpcid and param must be encapsulated according to the RPC message format
-
-		The return value from the RPC call must be decapsulated according to the RPC message format
-
-		*/
-				
-		if (true)
-			throw new UnsupportedOperationException(TODO.method());
-		
-		// TODO - END
+		byte[] requestPayload = RPCUtils.encapsulate(rpcid, param);
+		Message requestMessage = new Message(requestPayload);
+		connection.send(requestMessage);
+		Message responMessage = connection.receive();
+		byte[] responsePayLoad = RPCUtils.decapsulate(responMessage.getData());
+		returnval = responsePayLoad;
 		return returnval;
 		
 	}

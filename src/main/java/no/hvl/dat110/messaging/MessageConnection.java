@@ -3,10 +3,16 @@ package no.hvl.dat110.messaging;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+// import java.io.FileInputStream;
+// import java.io.FileOutputStream;
 import java.io.IOException;
+// import java.io.InputStream;
+// import java.io.OutputStream;
 import java.net.Socket;
+//import java.util.Random;
+//import java.util.Arrays;
 
-import no.hvl.dat110.TODO;
+//import no.hvl.dat110.TODO;
 
 
 public class MessageConnection {
@@ -35,27 +41,32 @@ public class MessageConnection {
 	public void send(Message message) {
 
 		byte[] data;
-		
+		data = message.getData();
+		try {
+			outStream.write(MessageUtils.encapsulate(message));
+			outStream.flush();
+		} catch (Exception e) {
+			System.out.println("Error occurred: " + e);
+		}
 		// TODO - START
 		// encapsulate the data contained in the Message and write to the output stream
 		
-		if (true)
-			throw new UnsupportedOperationException(TODO.method());
-			
-		// TODO - END
 
 	}
 
 	public Message receive() {
 
 		Message message = null;
-		byte[] data;
-		
-		// TODO - START
-		// read a segment from the input stream and decapsulate data into a Message
-		
-		if (true)
-			throw new UnsupportedOperationException(TODO.method());
+		byte[] data = new byte[128];
+		try {
+			inStream.read(data);
+			message = MessageUtils.decapsulate(data);
+
+		} catch (IOException e) {
+			System.out.println("Connection: " + e.getMessage());
+			e.printStackTrace();
+		}
+
 		
 		// TODO - END
 		

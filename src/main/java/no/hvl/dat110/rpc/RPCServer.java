@@ -2,7 +2,7 @@ package no.hvl.dat110.rpc;
 
 import java.util.HashMap;
 
-import no.hvl.dat110.TODO;
+//import no.hvl.dat110.TODO;
 import no.hvl.dat110.messaging.MessageConnection;
 import no.hvl.dat110.messaging.Message;
 import no.hvl.dat110.messaging.MessagingServer;
@@ -37,25 +37,24 @@ public class RPCServer {
 		boolean stop = false;
 		
 		while (!stop) {
-	    
-		   byte rpcid = 0;
-		   Message requestmsg, replymsg;
-		   
-		   // TODO - START
-		   // - receive a Message containing an RPC request
-		   // - extract the identifier for the RPC method to be invoked from the RPC request
-		   // - extract the method's parameter by decapsulating using the RPCUtils
-		   // - lookup the method to be invoked
-		   // - invoke the method and pass the param
-		   // - encapsulate return value 
-		   // - send back the message containing the RPC reply
 			
-		   if (true)
-				throw new UnsupportedOperationException(TODO.method());
-		   
-		   // TODO - END
+			byte rpcid = 0;
+			Message requestmsg, replymsg;
 
-			// stop the server if it was stop methods that was called
+			requestmsg = connection.receive();
+			byte[] requestdata = requestmsg.getData();
+			rpcid = requestdata[0];
+			byte[] parameter = RPCUtils.decapsulate(requestdata);
+			rpcstop = services.get(rpcid);
+			if (rpcstop == null) {
+    		System.out.println("Feil: Ingen tjeneste registrert for RPC ID " + rpcid);
+    		continue; 
+}
+			byte[] returnvalue = rpcstop.invoke(parameter);
+			replymsg = new Message(RPCUtils.encapsulate(rpcid, returnvalue));
+			connection.send(replymsg);
+		  	
+		   
 		   if (rpcid == RPCCommon.RPIDSTOP) {
 			   stop = true;
 		   }

@@ -8,12 +8,19 @@ public class Message {
 	private byte[] data;
 
 	// construction a Message with the data provided
-	public Message(byte[] data) {
+	public Message(byte[] data1) {
 		
 		// TODO - START
+
+		if (data1 != null & data1.length < 128) {
+			
+			this.data = data1.clone();
+
+			
+		} else {
+			throw new IllegalArgumentException("wrong input.");
+		}
 		
-		if (true)
-			throw new UnsupportedOperationException(TODO.constructor("Message"));
 			
 		// TODO - END
 	}

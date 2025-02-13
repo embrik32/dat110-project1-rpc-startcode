@@ -21,6 +21,7 @@ public class TestMessaging {
 		byte[] clientsent = { 1, 2, 3, 4, 5 };
 
 		AtomicBoolean failure = new AtomicBoolean(false);
+		
 
 		Thread server = new Thread() {
 
@@ -105,9 +106,11 @@ public class TestMessaging {
 			e.printStackTrace();
 			fail();
 		} finally {
+			
 			if (failure.get()) {
 				fail();
 			}
+			
 		}
 
 	}
