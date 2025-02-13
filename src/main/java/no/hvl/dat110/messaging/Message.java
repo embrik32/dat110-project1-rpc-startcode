@@ -20,7 +20,7 @@ public class Message {
 		} else {
 			throw new IllegalArgumentException("wrong input.");
 		}
-		
+		 
 			
 		// TODO - END
 	}
